@@ -1,0 +1,18 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Shadow layer -->
+    <item>
+        <shape>
+            <solid android:color="#55000000" /> <!-- Shadow color with transparency -->
+            <corners android:radius="10dp"/>
+        </shape>
+    </item>
+
+    <!-- Button shape layer -->
+    <item android:top="4dp" android:left="4dp"> <!-- Offset to create shadow effect -->
+        <shape>
+            <solid android:color="#7B1FA2" />
+            <corners android:radius="10dp"/>
+            <stroke android:width="2dp" android:color="#FFFFFF"/>
+        </shape>
+    </item>
+</layer-list>
