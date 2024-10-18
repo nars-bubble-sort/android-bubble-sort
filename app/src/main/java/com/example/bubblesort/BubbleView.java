@@ -1,10 +1,11 @@
 package com.example.bubblesort;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,7 +23,8 @@ public class BubbleView extends View {
 
     private void init() {
         paint = new Paint();
-        paint.setColor(Color.BLACK);
+        int color = ContextCompat.getColor(getContext(), R.color.bubble_color); // new
+        paint.setColor(color);
         paint.setStyle(Paint.Style.FILL);
     }
 
