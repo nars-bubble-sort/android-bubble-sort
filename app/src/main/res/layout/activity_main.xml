@@ -1,19 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background">
 
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
     <!-- LinearLayout with vertical orientation inside ConstraintLayout -->
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -23,10 +14,8 @@
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <!-- App Name -->
         <TextView
@@ -40,9 +29,9 @@
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="4"
-            android:text="Bubblify"
+            android:text="@string/app_name"
             android:textAlignment="center"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="48sp" />
 
         <!-- App Logo -->
@@ -55,7 +44,7 @@
             android:layout_marginBottom="8dp"
             android:adjustViewBounds="true"
             android:background="@android:color/transparent"
-            android:contentDescription="Bubble sort logo"
+            android:contentDescription="@string/content_description"
             android:scaleType="fitCenter"
             android:src="@drawable/bubble_sort_transparent"
             android:visibility="visible" />
@@ -66,9 +55,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/button_background"
-            android:text="Next"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:elevation="8dp"
+            android:paddingStart="20dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="12dp"
+            android:text="@string/btn_next"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
     </LinearLayout>
 
     <com.example.bubblesort.BubbleView
@@ -77,4 +72,3 @@
         android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>

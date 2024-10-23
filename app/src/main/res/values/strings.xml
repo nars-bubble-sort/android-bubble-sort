@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">Bubble Sort</string>
+    <string name="app_name">Bubblify</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_reset">Reset</string>
+    <string name="btn_sort">Sort</string>
+    <string name="btn_exit">Exit</string>
+    <string name="sort_label">Sorted Result: </string>
+    <string name="content_description">Bubble sort logo</string>
+    <string name="input_hint">Enter spaced numbers (max 8)</string>
 </resources>
