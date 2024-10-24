@@ -1,5 +1,7 @@
 package com.example.bubblesort;
 
+import android.util.Log;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.activity.EdgeToEdge;
@@ -9,6 +11,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -102,34 +105,93 @@ public class BubbleSortActivity extends AppCompatActivity {
 
         bubbleSort(numbers);
         adapter.notifyDataSetChanged();
-        resultTextView.setText("Sorted Result: " + Arrays.toString(numbers));
+        resultTextView.setText("Sorted Result: " + Arrays.stream(numbers).mapToObj(String::valueOf).collect(Collectors.joining(" ")));
     }
 
     private void bubbleSort(int[] arr) {
         int n = arr.length;
-        for (int i = 0; i < n - 1; i++) {
+        //code to underline unsorted array
+        for (int i = 0; i < n ; i++) {
+
             boolean swapped = false;
+            int counter = 0;
+            int index = 0;
+            for (int k = 0; k < n - 1; k++) {
+                if (counter == 1) {
+                    Log.d("BubbleSortActivity", "1");
+                    break;
+                }
+                for (int l = k + 1; l < n; l++) {
+                    if (arr[k] <= arr[l]) {
+                        Log.d("BubbleSortActivity", "2");
+                        counter = 0;
+                    } else {
+                        counter = 1;
+                        index = k;
+                        Log.d("BubbleSortActivity", "3");
+                        break;
+                    }
+                }
+
+            }
+            if (counter == 1) {
+                String spacedString2 = Arrays.stream(arr)
+                        .mapToObj(String::valueOf)
+                        .collect(Collectors.joining(" "));
+                SpannableString unsortedString = new SpannableString(spacedString2);
+                //_underlineNumbersUnsorted(unsortedString, arr[index], arr[n - 1]);
+                _underlineNumbersUnsorted(unsortedString, index, n - 1);
+                iterations.add("[Underlined: unsorted array under sorting]");
+                iterations.add(unsortedString);
+                Log.d("BubbleSortActivity", "4");
+            }
+            if (counter == 0) {
+                String spacedsortedString = Arrays.stream(arr)
+                        .mapToObj(String::valueOf)
+                        .collect(Collectors.joining(" "));
+                SpannableString sortedString = new SpannableString(spacedsortedString);
+                _highlightNumberssorted(sortedString, arr[n - 1]);
+                iterations.add("[Sorting completed. Below is sorted array in red.]");
+                iterations.add(sortedString);
+                Log.d("BubbleSortActivity", "5");
+            }
+
             // Inner loop iterates from the end towards the beginning
             for (int j = n - 1; j > i; j--) {
+                if (counter == 0) {
+                    break;
+                }
+
+                String spacedString = Arrays.stream(arr)
+                        .mapToObj(String::valueOf)
+                        .collect(Collectors.joining(" "));
+                SpannableString underlinedString = new SpannableString(spacedString);
+//                _underlineNumbers(underlinedString, arr[j - 1], arr[j]);
+                _underlineNumbers(underlinedString, j - 1, j);
+                iterations.add(underlinedString);
+                Log.d("BubbleSortActivity", "6");
+
                 if (arr[j - 1] > arr[j]) {
                     // Swap adjacent elements
                     int temp = arr[j];
                     arr[j] = arr[j - 1];
                     arr[j - 1] = temp;
                     swapped = true;
-
-                    String spacedString = Arrays.stream(arr)
-                            .mapToObj(String::valueOf)
-                            .collect(Collectors.joining(" "));
-                    SpannableString highlightedString = new SpannableString(spacedString);
-                    _highlightNumbers(highlightedString, arr[j - 1], arr[j]);
-                    iterations.add(highlightedString);
+                    Log.d("BubbleSortActivity", "7");
                 }
             }
 
             if (swapped) {
+                String spacedString1 = Arrays.stream(arr)
+                        .mapToObj(String::valueOf)
+                        .collect(Collectors.joining(" "));
+                SpannableString highlightedString = new SpannableString(spacedString1);
+                _highlightNumbers(highlightedString, arr[i]);
+                iterations.add(highlightedString);
                 iterations.add("Iteration " + (i + 1) + " complete.");
+                Log.d("BubbleSortActivity", "8");
             } else {
+                Log.d("BubbleSortActivity", "9");
                 break;
             }
         }
@@ -156,16 +218,43 @@ public class BubbleSortActivity extends AppCompatActivity {
         toast.show();
     }
 
-    private void _highlightNumbers(SpannableString string, int num1, int num2) {
+    private void _underlineNumbers(SpannableString string, int num1, int num2) {
         String str = string.toString();
+        int index1 = num1*2;//str.indexOf(String.valueOf(num1));
+        int index2 = num2*2;//str.indexOf(String.valueOf(num2));
+        string.setSpan(new UnderlineSpan(), index1, index2 + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        Log.d("BubbleSortActivity", "value 1 is"+String.valueOf(index1));
+        Log.d("BubbleSortActivity", "value 2 is"+String.valueOf(index2));
+    }
+
+    private void _underlineNumbersUnsorted(SpannableString string, int num1, int num2) {
+        String str = string.toString();
+        int index1 = num1*2;//str.indexOf(String.valueOf(num1));
+        int startindex = 0;
+        int index0 = (num1 - 1)*2;
+        int index2 = num2*2;//str.indexOf(String.valueOf(num2));
+        if (index1 > 0) {
+            string.setSpan(new ForegroundColorSpan(Color.RED), startindex, index0, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        string.setSpan(new UnderlineSpan(), index1, index2 + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
+
+    private void _highlightNumbers(SpannableString string, int num1) {
+        String str = string.toString();
+        int startindex = 0;
         int index1 = str.indexOf(String.valueOf(num1));
-        int index2 = str.indexOf(String.valueOf(num2));
 
         // Highlight num1 in red
-        string.setSpan(new ForegroundColorSpan(Color.RED), index1, index1 + String.valueOf(num1).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        string.setSpan(new ForegroundColorSpan(Color.RED), startindex, index1+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
 
-        // Highlight num2 in red
-        string.setSpan(new ForegroundColorSpan(Color.RED), index2, index2 + String.valueOf(num2).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    private void _highlightNumberssorted(SpannableString string, int num1) {
+        String str = string.toString();
+        int startindex = 0;
+        int index1 = str.lastIndexOf(String.valueOf(num1));
+
+        // Highlight num1 in red
+        string.setSpan(new ForegroundColorSpan(Color.RED), startindex, index1+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     private void _initializeRecycleIterations() {
