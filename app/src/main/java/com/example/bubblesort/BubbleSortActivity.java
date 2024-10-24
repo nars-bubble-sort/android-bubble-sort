@@ -231,7 +231,7 @@ public class BubbleSortActivity extends AppCompatActivity {
         String str = string.toString();
         int index1 = num1*2;//str.indexOf(String.valueOf(num1));
         int startindex = 0;
-        int index0 = (index1 - 1)*2;
+        int index0 = (num1 - 1)*2;
         int index2 = num2*2;//str.indexOf(String.valueOf(num2));
         if (index1 > 0) {
             string.setSpan(new ForegroundColorSpan(Color.RED), startindex, index0, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
