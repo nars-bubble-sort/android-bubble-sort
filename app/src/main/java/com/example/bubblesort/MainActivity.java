@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Re-enable the button (in case user comes back to this activity)
                 nextButton.setEnabled(true);
-            }, 2000); // 2000 milliseconds = 2 seconds
+            }, 1000); // 2000 milliseconds = 2 seconds
         });
     }
 }

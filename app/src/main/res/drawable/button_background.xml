@@ -1,18 +1,25 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Shadow layer -->
+    <!-- Shadow layer with transparency for a smooth shadow effect -->
     <item>
         <shape>
-            <solid android:color="#55000000" /> <!-- Shadow color with transparency -->
-            <corners android:radius="10dp"/>
+            <solid android:color="#33000000" /> <!-- Semi-transparent shadow -->
+            <corners android:radius="12dp" />
         </shape>
     </item>
 
-    <!-- Button shape layer -->
-    <item android:top="4dp" android:left="4dp"> <!-- Offset to create shadow effect -->
+    <!-- Main button layer with gradient background -->
+    <item
+        android:left="4dp"
+        android:top="4dp"> <!-- Offset to create shadow effect -->
         <shape>
-            <solid android:color="#7B1FA2" />
-            <corners android:radius="10dp"/>
-            <stroke android:width="2dp" android:color="#FFFFFF"/>
+            <gradient
+                android:angle="270"
+                android:endColor="#7B1FA2"
+                android:startColor="#8E24AA" />
+            <corners android:radius="12dp" /> <!-- Rounded corners for a modern look -->
+            <stroke
+                android:width="2dp"
+                android:color="#FFFFFF" /> <!-- White border -->
         </shape>
     </item>
 </layer-list>

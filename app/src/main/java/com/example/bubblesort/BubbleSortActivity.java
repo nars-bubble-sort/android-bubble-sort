@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.LayoutInflater;
 import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.Button;
@@ -31,23 +32,29 @@ public class BubbleSortActivity extends AppCompatActivity {
     TextView resultTextView;
     List<CharSequence> iterations; // Changed to List<CharSequence>
     IterationAdapter adapter;
+    View toastLayout;
+    TextView toastText;
+    Toast toast;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_bubble_sort);
+        LayoutInflater inflater = getLayoutInflater();
+        toast = new Toast(getApplicationContext());
+        toastLayout = inflater.inflate(R.layout.custom_toast, null);
 
         inputEditText = findViewById(R.id.inputEditText);
         sortButton = findViewById(R.id.sortButton);
         recyclerView = findViewById(R.id.recyclerView);
         resultTextView = findViewById(R.id.resultTextView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        toastText = toastLayout.findViewById(R.id.toast_text);
 
         sortButton.setOnClickListener(v -> {
             String input = inputEditText.getText().toString();
-            recyclerView.setVisibility(View.VISIBLE);
-            resultTextView.setVisibility(View.VISIBLE);
             performBubbleSort(input);
         });
     }
@@ -71,26 +78,30 @@ public class BubbleSortActivity extends AppCompatActivity {
             try {
                 numbers[i] = Integer.parseInt(numbersStr[i]);
                 if (numbers[i] < 0 || numbers[i] > 9) {
-                    Toast.makeText(this, "Error: Enter numbers between 0-9", Toast.LENGTH_SHORT).show();
+                    this._showToast("Error: Enter numbers between 0-9");
                     inputEditText.setText("");
                     return;
                 }
             } catch (NumberFormatException e) {
-                Toast.makeText(this, "Invalid input: Please enter valid numbers separated by spaces.", Toast.LENGTH_SHORT).show();
+                this._showToast("Invalid input: Please enter valid numbers separated by spaces.");
                 inputEditText.setText("");
                 return;
             }
         }
 
         if (numbersStr.length > 8) {
-            Toast.makeText(this, "Error: Input too long (max 8 numbers)", Toast.LENGTH_SHORT).show();
+            this._showToast("Error: Input too long (max 8 numbers)");
             return;
         }
 
         if (numbersStr.length < 3) {
-            Toast.makeText(this, "Error: Input too short (min 3 numbers)", Toast.LENGTH_SHORT).show();
+            this._showToast("Error: Input too short (min 3 numbers)");
             return;
         }
+
+        //Once no errors enable the sorted result and the recycler view
+        recyclerView.setVisibility(View.VISIBLE);
+        resultTextView.setVisibility(View.VISIBLE);
 
         bubbleSort(numbers);
         adapter.notifyDataSetChanged();
@@ -198,6 +209,13 @@ public class BubbleSortActivity extends AppCompatActivity {
     public void exitApplication(View v) {
         finishAffinity();
         System.exit(0);
+    }
+
+    private void _showToast(String textMessage) {
+        toastText.setText(textMessage);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(toastLayout);
+        toast.show();
     }
 
     private void _underlineNumbers(SpannableString string, int num1, int num2) {
