@@ -2,6 +2,7 @@
 
 package com.example.bubblesort;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,8 @@ public class IterationAdapter extends RecyclerView.Adapter<IterationAdapter.Iter
         public IterationViewHolder(View itemView) {
             super(itemView);
             iterationTextView = itemView.findViewById(android.R.id.text1);
+            iterationTextView.setTextColor(Color.WHITE);
+
         }
     }
 }

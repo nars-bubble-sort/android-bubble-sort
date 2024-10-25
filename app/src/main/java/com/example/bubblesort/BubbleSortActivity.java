@@ -1,7 +1,11 @@
 package com.example.bubblesort;
 
+import android.content.Context;
+import android.graphics.Paint;
+import android.util.AttributeSet;
 import android.util.Log;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.activity.EdgeToEdge;
@@ -36,11 +40,11 @@ public class BubbleSortActivity extends AppCompatActivity {
     TextView toastText;
     Toast toast;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+
         setContentView(R.layout.activity_bubble_sort);
         LayoutInflater inflater = getLayoutInflater();
         toast = new Toast(getApplicationContext());
