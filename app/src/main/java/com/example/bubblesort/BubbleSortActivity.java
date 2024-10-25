@@ -73,8 +73,8 @@ public class BubbleSortActivity extends AppCompatActivity {
         String word = "quit";
 
         if (Arrays.asList(inputStr.toLowerCase()).contains(word)) {
-            finish();
-            return;
+            finishAffinity();
+            System.exit(0);
         }
 
         int[] numbers = new int[numbersStr.length];
